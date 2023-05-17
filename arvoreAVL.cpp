@@ -39,7 +39,46 @@ int getBalance(Node *N){
 }
 //khalil
 Node* insert(Node* node, int key){
+//regular BST insertion
+    if(node == nullptr) return newNode(key);
 
+    if (key < node->key)
+        node->left = insert(node->left, key);
+    else if (key > node->key)
+        node->right = insert(node->right, key);
+    else 
+        return node;
+ 
+    //updating the node height after insertion
+    node->height = 1 + max(height(node->left),
+                        height(node->right));
+ 
+    //getting balance to see if the node is unbalanced
+    int balance = getBalance(node);
+ 
+    // Left Left Case
+    if (balance > 1 && key < node->left->key)
+        return rightRotate(node);
+ 
+    // Right Right Case
+    if (balance < -1 && key > node->right->key)
+        return leftRotate(node);
+ 
+    // Left Right Case
+    if (balance > 1 && key > node->left->key)
+    {
+        node->left = leftRotate(node->left);
+        return rightRotate(node);
+    }
+ 
+    // Right Left Case
+    if (balance < -1 && key < node->right->key)
+    {
+        node->right = rightRotate(node->right);
+        return leftRotate(node);
+    }
+
+    return node;
 }
 
 void preOrder(Node *root){
