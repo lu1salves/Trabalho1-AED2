@@ -37,7 +37,7 @@ Node *leftRotate(Node *x){
 //marco
 int getBalance(Node *N){
 }
-//khalil
+//khalil (teste)
 Node* insert(Node* node, int key){
 //regular BST insertion
     if(node == nullptr) return newNode(key);
