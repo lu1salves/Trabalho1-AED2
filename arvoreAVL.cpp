@@ -44,7 +44,10 @@ Node *leftRotate(Node *x){
     return y;
 }
 //marco
-int getBalance(Node *N){
+int getBalance(Node *N){   
+    if (N == NULL)
+        return 0;
+	return height(N->left) - height(N->right);
 }
 //khalil (teste)
 Node* insert(Node* node, int key){
