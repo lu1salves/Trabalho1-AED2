@@ -100,7 +100,7 @@ void destroyTree(Node* node) {
 
 void find(Node* node, int matricula) {
     if (node == nullptr) {
-        printf("Matricula nao encontrada!\n");
+        cout << "Matricula nao encontrada" << endl;
 	}
 	else if (matricula == node->matricula){
 		cout << "Nome: " << node->nome << ", Matrícula: " << node->matricula << endl;
