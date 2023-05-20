@@ -98,6 +98,18 @@ void destroyTree(Node* node) {
     delete node;
 }
 
+void find(Node* node, int matricula) {
+    if (node == nullptr) {
+        printf("Matricula nao encontrada!\n");
+	}
+	else if (matricula == node->matricula){
+		cout << "Nome: " << node->nome << ", Matrícula: " << node->matricula << endl;
+	}else if(matricula<node->matricula)
+        find(node->left, matricula);
+    else 
+        find(node->right, matricula);
+}
+
 int main() {
     Node* root = nullptr;
 
