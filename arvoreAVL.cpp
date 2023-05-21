@@ -9,16 +9,35 @@ class Node{
 	int height;
 };
 
+/**
+ * @brief Devolve a altura relativa a um determinado nó
+ * 
+ * @param node 
+ * @return int 
+ */
 int height(Node *N){
 	if (N == NULL)
 		return 0;
 	return N->height;
 }
 
+/**
+ * @brief Testa entre dois número qual é o maior
+ * 
+ * @param a 
+ * @param b 
+ * @return int 
+ */
 int max(int a, int b){
 	return (a > b)? a : b;
 }
 
+/**
+ * @brief Alocação de um novo nó, de acordo com a chave recebida
+ * 
+ * @param key 
+ * @return Node* 
+ */
 Node* newNode(int key){
 	Node* node = new Node();
 	node->key = key;
@@ -27,9 +46,16 @@ Node* newNode(int key){
 	node->height = 1;
 	return(node);
 }
-//eduardo
+
+//Eduardo
+/**
+ * @brief Rotaciona para a direita o nó e reajusta os ponteiros necessários
+ * 
+ * @param node 
+ * @return Node* 
+ */
 Node *rightRotate(Node *y){
-Node *x, *z;
+    Node *x, *z;
     x = y->left;
 
     z = y->right;
@@ -43,6 +69,12 @@ Node *x, *z;
     return y;
 }
 //rafael
+/**
+ * @brief Rotaciona para a esquerda o nó e reajusta os ponteiros necessários
+ * 
+ * @param node 
+ * @return Node* 
+ */
 Node *leftRotate(Node *x){
     Node *y, *z;
     y = x->right; // y aponta à direita da raiz 
@@ -55,12 +87,25 @@ Node *leftRotate(Node *x){
     return y;
 }
 //marco
+/**
+ * @brief Cálcula o índice de balanceamento de um determinado nó
+ * 
+ * @param N 
+ * @return int 
+ */
 int getBalance(Node *N){   
     if (N == NULL)
         return 0;
 	return height(N->left) - height(N->right);
 }
-//khalil (teste)
+//khalil
+/**
+ * @brief Insere recursivamente elementos na árvore, atualiza suas alturas e realiza os reajuste necessários na árvore caso ela esteja desbalanceada
+ * 
+ * @param node 
+ * @param key 
+ * @return Node* 
+ */
 Node* insert(Node* node, int key){
 //regular BST insertion
     if(node == nullptr) return newNode(key);
@@ -104,6 +149,11 @@ Node* insert(Node* node, int key){
     return node;
 }
 
+/**
+ * @brief Exibição do percurso preorder da árvore
+ * 
+ * @param root 
+ */
 void preOrder(Node *root){
 	if( root != nullptr ){
 		cout << root->key << " ";
