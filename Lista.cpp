@@ -10,6 +10,14 @@ struct Node {
     Node* next;
 };
 
+/**
+ * @brief Realiza a insercçao de um elemento dentro da lista encadeada
+ * 
+ * @param head 
+ * @param nome 
+ * @param matricula 
+ * @return Node* 
+ */
 Node* insert(Node* head, string nome, int matricula) {
     Node* newNode = new Node;
     newNode->nome = nome;
@@ -36,6 +44,11 @@ Node* insert(Node* head, string nome, int matricula) {
     return head;
 }
 
+/**
+ * @brief Exibe todos elementos presentes na lista
+ * 
+ * @param head 
+ */
 void displayList(Node* head) {
     Node* current = head;
     while (current != nullptr) {
@@ -44,6 +57,11 @@ void displayList(Node* head) {
     }
 }
 
+/**
+ * @brief Libera o espaço de memória utilizado pela lista
+ * 
+ * @param head 
+ */
 void destroyList(Node* head) {
     Node* current = head;
     while (current != nullptr) {
