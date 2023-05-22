@@ -4,130 +4,130 @@
 
 using namespace std;
 
-struct Node {
-    Node* left;
-    Node* right;
+struct No {
+    No* esquerda;
+    No* direita;
     string nome;
     int matricula;
-    int height;
+    int altura;
 };
 
 /**
- * @brief Devolva a altura relativa a um determinado nó
+ * @brief Devolve a altura relativa a um determinado nó
  * 
- * @param node 
+ * @param No 
  * @return int 
  */
-int getHeight(Node* node) {
-    if (node == nullptr) return 0;
-    return node->height;
+int pegaAltura(No* no) {
+    if (no == nullptr) return 0;
+    return no->altura;
 }
 
 /**
  * @brief Calcula o fator de balanceamento do nó dado
  * 
- * @param node 
+ * @param No 
  * @return int 
  */
-int getBalanceFactor(Node* node) {
-    if (node == nullptr) return 0;
-    return getHeight(node->left) - getHeight(node->right);
+int pegaFatorDeBalanceamento(No* no) {
+    if (no == nullptr) return 0;
+    return pegaAltura(no->esquerda) - pegaAltura(no->direita);
 }
 
 /**
  * @brief Recalcula a altura de um nó em caso de inserção ou exclusão de um elemento
  * 
- * @param node 
+ * @param No 
  */
-void updateHeight(Node* node) {
-    int leftHeight = getHeight(node->left);
-    int rightHeight = getHeight(node->right);
-    node->height = 1 + max(leftHeight, rightHeight);
+void atualizaAltura(No* no) {
+    int alturaEsquerda = pegaAltura(no->esquerda);
+    int alturaDireita = pegaAltura(no->direita);
+    no->altura = 1 + max(alturaEsquerda, alturaDireita);
 }
 
 /**
- * @brief Rotaciona para a direita o nó e reajusta os ponteiros necessários
+ * @brief Rotaciona para a direita o nó, reajusta os ponteiros necessários e recalcula a altura dos nós envolvidos
  * 
- * @param node 
- * @return Node* 
+ * @param No 
+ * @return No* 
  */
-Node* rotateRight(Node* node) {
-    Node* newRoot = node->left;
-    node->left = newRoot->right;
-    newRoot->right = node;
-    updateHeight(node);
-    updateHeight(newRoot);
-    return newRoot;
+No* rotacionarDireita(No* no) {
+    No* novaRaiz = no->esquerda;
+    no->esquerda = novaRaiz->direita;
+    novaRaiz->direita = no;
+    atualizaAltura(no);
+    atualizaAltura(novaRaiz);
+    return novaRaiz;
 }
 
 /**
- * @brief Rotaciona o nó para a esquerda e faz o reajuste dos ponteiros
+ * @brief Rotaciona o nó para a esquerda, faz o reajuste dos ponteiros e recalcula a altura dos nós envolvidos
  * 
- * @param node 
- * @return Node* 
+ * @param No 
+ * @return No* 
  */
-Node* rotateLeft(Node* node) {
-    Node* newRoot = node->right;
-    node->right = newRoot->left;
-    newRoot->left = node;
-    updateHeight(node);
-    updateHeight(newRoot);
-    return newRoot;
+No* rotacionarEsquerda(No* no) {
+    No* novaRaiz = no->direita;
+    no->direita = novaRaiz->esquerda;
+    novaRaiz->esquerda = no;
+    atualizaAltura(no);
+    atualizaAltura(novaRaiz);
+    return novaRaiz;
 }
 
 /**
  * @brief Função que realiza toda a operação de balanceamento de um nó, incluindo atualização de sua altura e as rotações necessárias para manter as propriedades de uma árvore AVL
  * 
- * @param node 
- * @return Node* 
+ * @param No 
+ * @return No* 
  */
-Node* balance(Node* node) {
-    updateHeight(node);
-    int balanceFactor = getBalanceFactor(node);
+No* balancear(No* no) {
+    atualizaAltura(no);
+    int balanceFactor = pegaFatorDeBalanceamento(no);
     if (balanceFactor > 1) {
-        if (getBalanceFactor(node->left) < 0) node->left = rotateLeft(node->left);
-        return rotateRight(node);
+        if (pegaFatorDeBalanceamento(no->esquerda) < 0) no->esquerda = rotacionarEsquerda(no->esquerda);
+        return rotacionarDireita(no);
     }
     if (balanceFactor < -1) {
-        if (getBalanceFactor(node->right) > 0) node->right = rotateRight(node->right);
-        return rotateLeft(node);
+        if (pegaFatorDeBalanceamento(no->direita) > 0) no->direita = rotacionarDireita(no->direita);
+        return rotacionarEsquerda(no);
     }
-    return node;
+    return no;
 }
 
 /**
  * @brief Insere um nó dentro da árove de forma recursiva
  * 
- * @param node 
+ * @param No 
  * @param nome 
  * @param matricula 
- * @return Node* 
+ * @return No* 
  */
-Node* insert(Node* node, string nome, int matricula) {
-    if (node == nullptr) {
-        Node* newNode = new Node;
-        newNode->left = nullptr;
-        newNode->right = nullptr;
-        newNode->nome = nome;
-        newNode->matricula = matricula;
-        newNode->height = 1;
-        return newNode;
+No* inserir(No* no, string nome, int matricula) {
+    if (no == nullptr) {
+        No* novoNO = new No;
+        novoNO->esquerda = nullptr;
+        novoNO->direita = nullptr;
+        novoNO->nome = nome;
+        novoNO->matricula = matricula;
+        novoNO->altura = 1;
+        return novoNO;
     }
-    if (matricula < node->matricula) node->left = insert(node->left, nome, matricula);
-    else node->right = insert(node->right, nome, matricula);
-    return balance(node);
+    if (matricula < no->matricula) no->esquerda = inserir(no->esquerda, nome, matricula);
+    else no->direita = inserir(no->direita, nome, matricula);
+    return balancear(no);
 }
 
 /**
  * @brief Exibe a árvore AVL de acordo com o padrão inorder
  * 
- * @param node 
+ * @param No 
  */
-void inOrderTraversal(Node* node) {
-    if (node == nullptr) return;
-    inOrderTraversal(node->left);
-    cout << "Nome: " << node->nome << ", Matrícula: " << node->matricula << endl;
-    inOrderTraversal(node->right);
+void percursoInorder(No* no) {
+    if (no == nullptr) return;
+    percursoInorder(no->esquerda);
+    cout << "Nome: " << no->nome << ", Matrícula: " << no->matricula << endl;
+    percursoInorder(no->direita);
 }
 
 /**
@@ -145,36 +145,36 @@ void posorder();
 /**
  * @brief Destrói, de forma recursiva, a árvore recebida
  * 
- * @param node 
+ * @param No 
  */
-void destroyTree(Node* node) {
-    if (node == nullptr) return;
-    destroyTree(node->left);
-    destroyTree(node->right);
-    delete node;
+void apagaArvore(No* no) {
+    if (no == nullptr) return;
+    apagaArvore(no->esquerda);
+    apagaArvore(no->direita);
+    delete no;
 }
 
 /**
  * @brief Realiza a busca de um determinado número de matrícula dentro da árvore AVL
  * 
- * @param node 
+ * @param No 
  * @param matricula 
  */
-void find(Node* node, int matricula) {
-    if (node == nullptr) {
+void procura(No* no, int matricula) {
+    if (no == nullptr) {
         cout << "Matricula nao encontrada" << endl;
 	}
-	else if (matricula == node->matricula){
-		cout << "Nome: " << node->nome << ", Matrícula: " << node->matricula << endl;
-	}else if (matricula < node->matricula)
-        find( node->left, matricula );
+	else if (matricula == no->matricula){
+		cout << "Nome: " << no->nome << ", Matrícula: " << no->matricula << endl;
+	}else if (matricula < no->matricula)
+        procura( no->esquerda, matricula );
     else 
-        find(node->right, matricula);
+        procura(no->direita, matricula);
 }
 
 
 int main() {
-    Node* root = nullptr;
+    No* raiz = nullptr;
 
      string nome;
      int matricula;
@@ -182,7 +182,7 @@ int main() {
     auto tempo_montagem_arvore1 = chrono::steady_clock::now();
 
      while(cin>>matricula>>nome){
-          root = insert(root, nome, matricula);
+          raiz = inserir(raiz, nome, matricula);
      }
 
     auto tempo_montagem_arvore2 = chrono::steady_clock::now();
@@ -190,11 +190,11 @@ int main() {
 
 
     auto tempo_percorrer_arvore1 = chrono::steady_clock::now();
-    inOrderTraversal(root);
+    percursoInorder(raiz);
     auto tempo_percorrer_arvore2 = chrono::steady_clock::now();
     auto tempo_total_percorrer_arovre = chrono::duration_cast<chrono::nanoseconds>(tempo_percorrer_arvore2 - tempo_percorrer_arvore1).count();
 
-    destroyTree(root);
+    apagaArvore(raiz);
 
     cout<<"O tempo total para a montagem da árvore é de "<<tempo_total_montagem_arvore<<" nanosegundos"<< endl;
     cout<<"O tempo total para a percorrer toda a árvore ordenada é de "<<tempo_total_percorrer_arovre<<" nanosegundos"<< endl;
