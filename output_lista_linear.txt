@@ -11244,5 +11244,4 @@ Nome: GABRIELA, Matrícula: 202306491
 Nome: EVELIN, Matrícula: 202306497
 Nome: MARCOS, Matrícula: 202306498
 Nome: MARIANA, Matrícula: 202306499
-O tempo para montar a lista foi de 295 389 421 nanosegundos
-
+O tempo para montar a lista foi de 274 451 198 nanosegundos

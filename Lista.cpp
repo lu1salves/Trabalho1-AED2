@@ -69,7 +69,6 @@ int main() {
 
     // Exemplo de exibição da lista
     displayList(head);
-
      cout<<"O tempo para montar a lista foi de "<<tempo_total_montagem_lista<<" nanosegundos"<<endl;
     // Liberar a memória da lista
     destroyList(head);

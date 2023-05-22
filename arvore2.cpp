@@ -12,6 +12,11 @@ struct Node {
     int height;
 };
 
+/**
+ * @brief Função para pegar algum nó
+ * @param node 
+ * @return int 
+ */
 int getHeight(Node* node) {
     if (node == nullptr) return 0;
     return node->height;

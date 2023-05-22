@@ -11244,5 +11244,5 @@ Nome: GABRIELA, Matrícula: 202306491
 Nome: EVELIN, Matrícula: 202306497
 Nome: MARCOS, Matrícula: 202306498
 Nome: MARIANA, Matrícula: 202306499
-O tempo total para a montagem da árvore é de 39 128 409 nanosegundos
-O tempo total para a percorrer toda a árvore ordenada é de 19 711 698 nanosegundos
+O tempo total para a montagem da árvore é de 20 378 407 nanosegundos
+O tempo total para a percorrer toda a árvore ordenada é de 17 969 389 nanosegundos
